@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<title>
+about *** aldebrn.me
+</title>
+<meta charset="UTF-8">
+<style>
+@font-face {
+ font-family: 'fira_codelight';
+ src: url('firacode-light-webfont.woff') format('woff');
+ font-weight: normal;
+ font-style: normal;
+}
+body {
+ margin-left: 2em;
+ display: flex;
+ flex-direction: row;
+ font-size: 1.5em;
+ font-family: "fira_codelight";
+ font-variant-ligatures: "contextual";
+}
+
+.body {
+ flex-direction: row;
+ display: flex;
+ flex: 1;
+}
+.nav {
+ display: flex;
+ flex-direction: column;
+ order: -1;
+ flex: 0 0 12em;
+}
+.content {
+ flex: 1;
+ max-width: 50ex;
+}
+@media (max-width: 768px) {
+ .body {
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+ }
+ .nav {
+  flex: 0 0 1em;
+ }
+}
+.nav li {
+ list-style-type:none;
+ padding-left:0;
+}
+p {
+ line-height: 1.19em;
+}
+blockquote p {
+ hanging-punctuation: first;
+ text-indent: 2em;
+}
+figcaption {
+ font-size: 0.9em;
+}
+</style>
+<body>
+ <div class="body">
+<article class="content">
+ <header>
+ <h2>Insight !== Numbers</h2>
+ </header>
+
+ <section>
+ <h3>About Ahmed Fasih</h3>
+ <figure>
+  <img src="images/fam-stache.jpg" width="50%">
+  <figcaption>My incognita family, circa mid-2015. Clockwise from right: Ahmed (me), Alistair, Emily, and Basile.</figcaption>
+ </figure>
+ <p>After enjoying programming and Unixing for years, I discovered applied math in mid-undergrad and decided it would be harder, and therefore more interesting, than “just” software engineering. After years of grad school (terminal ABD in electrical engineering at Ohio State), then working in the lovely D.C. metro area (for Leidos, then the Johns Hopkins University Applied Physics Lab), I revised my views and came back to Ohio to work as a software engineer who happens to know about signal processing and machine learning.</p>
+
+  <p>I sling C, Python, Julia, CUDA, alas Matlab, etc., to crunch numbers. I craft JavaScript, Clojure, and ClojureScript to make webapps.</p>
+
+  <p>The headline for these pages comes from Dr Hamming’s motto, <strong>“The purpose of computation is insight, not numbers”</strong> <a href="http://www.siam.org/news/news.php?id=893">[SIAM]</a>.</p>
+ </section>
+</article>
+
+
+  <div class="nav">
+   <ul>
+    <li><a href="index.html">top</a></li>
+    <li><a href="code.html">code</a></li>
+    <li><a href="maps.html">maps</a></li>
+    <li><a href="math.html">math</a></li>
+    <li><a href="misc.html">misc</a></li>
+    <li><a href="about.html">about</a></li>
+   </ul>
+  </div>
+ </div>
+</body>
