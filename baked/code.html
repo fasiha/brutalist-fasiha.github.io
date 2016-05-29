@@ -71,6 +71,11 @@ matlab {
 matlab::before {
  content: "Matlab";
 }
+pre {
+ max-width: 80em;
+ font-size: 0.75em;
+ background: white;
+}
 </style>
 <body>
  <div class="body">
@@ -83,7 +88,29 @@ matlab::before {
   <h3><matlab></matlab>~~~Replicate columns of a matrix unequal numbers of times</h3>
   <p>We’ve got a matrix <code>P</code>. In <matlab></matlab>, this means a 2D array of numbers. It has  <code>widthP</code> columns and the number of rows doesn’t matter. We need a second matrix <code>M</code> that contains each column of the first matrix, <code>P</code>, repeated an arbitrary number of times. A vector <code>reps</code>, containing <code>widthP</code> entries, tells you how many times any given column of <code>P</code> is replicated.</p>
 
-  <p>E.g. If <code>P = [42 pi 101]</code> and <code>reps = [2 0 5]</code>, we want <code>M = [42 42 101 101 101 101 101]</code>, assuming I typed that correctly.
+  <p>E.g. If <code>P = [42 pi 101]</code> and <code>reps = [2 0 5]</code>, we want <code>M = [42 42 101 101 101 101 101]</code>, assuming I typed that correctly.</p>
+
+  <p>We had an approach that worked, but the profiler reported was a bottleneck. Here’s how we went about optimizing this.</p>
+  
+  <p>§1~&gt;create a standalone script which sets up some random data, and a correct implementation. The one here is simpler than the technique we started out with.</p>
+
+  <pre><code>P = [42 pi 101];
+reps = [2 0 5];
+
+widthP = length(reps);
+M = [];
+for colIdx = 1 : length(reps)
+  M = [M repmat(P(:, colIdx), 1, reps(colIdx))];
+end
+</code></pre>
+
+<p>§2~&gt;try to find ways to do the same thing but faster. Here’s the approach we actually started out with: it uses <code>arrayfun</code> <a href="http://www.mathworks.com/help/matlab/ref/arrayfun.html">[Mathworks]</a>, <matlab></matlab>’s primitive version of . </p>
+
+  <pre><code>c = arrayfun(@(n, i) i*ones(n,1), reps, 1:widthP, 'un', 0);
+i = cell2mat(c(:));
+M2 = P(:, i);
+assert(all(M2(:) == M(:)))
+</code></pre>
 
  </section>
 
