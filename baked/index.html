@@ -14,7 +14,7 @@ body {
  margin-left: 2em;
  display: flex;
  flex-direction: row;
- font-size: 1.5em;
+ font-size: 1.2em;
  font-family: "fira_codelight";
  font-variant-ligatures: "contextual";
 }
@@ -31,6 +31,9 @@ body {
  flex: 0 0 12em;
 }
 .content {
+ padding-left: 0.5em;
+ padding-right: 0.5em;
+ background: rgb(239,238,234);
  flex: 1;
  max-width: 50ex;
 }
@@ -57,6 +60,18 @@ blockquote p {
 }
 figcaption {
  font-size: 0.9em;
+}
+a, code {
+color: rgb(0,67,196)
+}
+code {
+ font-family: "fira_codelight";
+}
+matlab {
+ font-variant: small-caps;
+}
+matlab::before {
+ content: "Matlab";
 }
 </style>
 <body>

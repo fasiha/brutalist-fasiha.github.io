@@ -21,7 +21,7 @@
           baked)))
 
 (proc {:title "top *** aldebrn.me" :file "index.html"} template-file "baked/")
-(map #(proc % template-file "baked/") [{:title "top *** aldebrn.me" :file "index.html"} {:title "about *** aldebrn.me" :file "about.html"}])
+(map #(proc % template-file "baked/") [{:title "top *** aldebrn.me" :file "index.html"} {:title "about *** aldebrn.me" :file "about.html"} {:title "code *** aldebrn.me" :file "code.html"}])
 
 ; (let [bindings '[x 1]] (eval `(let ~bindings ~(reader/read-string "(+ 1 x)"))))
 ; (eval `(let ~'[x 1] ~(reader/read-string "(+ 1 x)")))
