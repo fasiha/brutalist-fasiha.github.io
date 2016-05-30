@@ -24,7 +24,7 @@
 (defn proc [params template-file output-path]
   (let [baked (-> template-file
                       slurp
-                      (evaluate-lozenges #"(?:^|[^\\])◊"
+                      (evaluate-lozenges #"◊"
                                          params))]
     (spit (str output-path (:file params))
           baked)))
@@ -42,6 +42,6 @@
 
 ;;; Example:
 
-(def s2 "yo ◊[:b \"Ahmed\"] you are #◊(* 10 (:x params))! Magic via \\◊s.")
-(def res2 (evaluate-lozenges s2 #"(?:^|[^\\])◊" {:x 123})) res2
+(def s2 "yo ◊[:b \"Ahmed\"] you are #◊(* 10 (:x params))! Magic via ◊(:loz params)s.")
+(def res2 (evaluate-lozenges s2 #"◊" {:x 123 :loz "◊"})) res2
 
