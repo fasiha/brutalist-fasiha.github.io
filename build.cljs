@@ -8,7 +8,7 @@
             [cljs.tools.reader :as reader]
             [cljs.tools.reader.reader-types :as rt]))
 
-(def template-file "template.html")
+(def template-file "src/template.html")
 
 (defn my-eval [s params]
   (let [pbr (rt/string-push-back-reader s)
@@ -30,9 +30,9 @@
           baked)))
 
 (println "Juicing…")
-(doseq [params [{:title "top *** aldebrn.me" :file "index.html"}
-                {:title "about *** aldebrn.me" :file "about.html"}
-                {:title "code *** aldebrn.me" :file "code.html"}]]
+(doseq [params [{:path "src" :title "top *** aldebrn.me" :file "index.html"}
+                {:path "src" :title "about *** aldebrn.me" :file "about.html"}
+                {:path "src" :title "code *** aldebrn.me" :file "code.html"}]]
   (proc params template-file "baked/"))
 
 ; (let [bindings '[x 1]] (eval `(let ~bindings ~(reader/read-string "(+ 1 x)"))))
