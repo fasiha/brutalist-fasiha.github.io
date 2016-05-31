@@ -29,7 +29,8 @@ matlab::before {
  content: "Matlab";
 }
 
-.nav li { display: inline; }
+nav li { display: inline; }
+nav ul { -webkit-padding-start: 0; }
 
 /* Tufte CSS styles */
 html { font-size: 15px; }
@@ -63,8 +64,7 @@ h3 { font-weight: 400;
      margin-bottom: 0;
      line-height: 1; }
 
-p.subtitle { font-style: italic;
-             margin-top: 1rem;
+p.subtitle { margin-top: 1rem;
              margin-bottom: 1rem;
              font-size: 1.8rem;
              display: block;
@@ -144,7 +144,7 @@ a:link, a:visited { color: rgb(0,67,196); }
 
 a:link { text-decoration: none;
          background: -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#333, #333);
-         background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(#333, #333);
+         background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(#cc0000, #cc0000);
          -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
          -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
          background-size: 0.05em 1px, 0.05em 1px, 1px 1px;

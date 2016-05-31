@@ -1,5 +1,5 @@
 #!/usr/bin/env planck
-; fswatch -0 *.html | xargs -0 -n 1 -I {} planck build.cljs
+; fswatch -0 src/*.html | xargs -0 -n 1 -I {} planck build.cljs
 
 (ns build.core
   (:require [planck.core :refer [slurp spit]]
@@ -20,19 +20,25 @@
 (defn evaluate-lozenges [s re params]
   (let [[f & r] (string/split s re)]
     (apply str (into [f] (mapcat #(my-eval % params)) r))))
+(defn evaluate-lozenges-recursive [s re params]
+  (if (re-find re s)
+    (recur (evaluate-lozenges s re params) re params)
+    s))
 
 (defn proc [params template-file output-path]
   (let [baked (-> template-file
                       slurp
-                      (evaluate-lozenges #"◊"
-                                         params))]
+                      (evaluate-lozenges-recursive #"◊"
+                                                   params))]
     (spit (str output-path (:file params))
           baked)))
 
 (println "Juicing…")
 (doseq [params [{:path "src" :title "top *** aldebrn.me" :file "index.html"}
                 {:path "src" :title "about *** aldebrn.me" :file "about.html"}
-                {:path "src" :title "code *** aldebrn.me" :file "code.html"}]]
+                {:path "src" :title "code *** aldebrn.me" :file "code.html"}
+                {:path "src" :title "code *** aldebrn.me" :file "code/mat-expando.html"}
+                ]]
   (proc params template-file "baked/"))
 
 ; (let [bindings '[x 1]] (eval `(let ~bindings ~(reader/read-string "(+ 1 x)"))))
