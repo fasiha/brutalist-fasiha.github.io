@@ -29,6 +29,19 @@ matlab::before {
  content: "Matlab";
 }
 
+div.body { display: flex;
+           flex-direction: row; }
+.nav {
+ order: -1;
+ flex: 0 0 12em;
+}
+.content {
+ flex: 1;
+}
+.nav li {
+ list-style-type:none;
+ padding-left:0;
+}
 
 /* Tufte CSS styles */
 html { font-size: 15px; }
@@ -36,7 +49,6 @@ html { font-size: 15px; }
 body { width: 87.5%;
        margin-left: auto;
        margin-right: auto;
-       padding-left: 12.5%;
        font-family: "fira_codelight";
        text-rendering: optimizeLegibility;
        background-color: #fffff8;
@@ -267,4 +279,7 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
                                              position: relative; }
                             div.table-wrapper, table, table.booktabs { width: 85%; }
                             div.table-wrapper { border-right: 1px solid #efefef; }
-                            img { width: 100%; } }
+                            img { width: 100%; } 
+                            div.body { flex-direction: column; }
+                            .nav { flex: 0 0 1em; }
+                            .nav li { display: inline; }}
