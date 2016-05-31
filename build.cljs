@@ -37,7 +37,9 @@
 (doseq [params [{:path "src" :title "top *** aldebrn.me" :file "index.html"}
                 {:path "src" :title "about *** aldebrn.me" :file "about.html"}
                 {:path "src" :title "code *** aldebrn.me" :file "code.html"}
+                {:path "src" :title "maps *** aldebrn.me" :file "maps.html"}
                 {:path "src" :title "code *** aldebrn.me" :file "code/mat-expando.html"}
+                {:path "src" :title "Texture-shaded terrain *** aldebrn.me" :file "maps/texshade/index.html"}
                 ]]
   (proc params template-file "baked/"))
 

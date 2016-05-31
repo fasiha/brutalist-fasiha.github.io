@@ -1,16 +1,18 @@
+◊(do
+  (defn dotdot [s] (str (apply str (repeat (count (filter #(= % "/") (:file params))) "../"))
+                        s))
+  nil)
 <!DOCTYPE html>
 <title>◊(:title params)</title>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="◊(apply str (repeat (count (filter #(= % "/") (:file params))) "../"))tufte.css"/>
+<link rel="stylesheet" href="◊(dotdot "tufte.css")"/>
 <body>
  <nav>
   <ul>
-   <li><a href="index.html">top</a></li>
-   <li><a href="code.html">code</a></li>
-   <li><a href="maps.html">maps</a></li>
-   <li><a href="math.html">math</a></li>
-   <li><a href="misc.html">misc</a></li>
-   <li><a href="about.html">about</a></li>
+   <li><a href="◊(dotdot "index.html")">top</a></li>
+   <li><a href="◊(dotdot "code.html")">code</a></li>
+   <li><a href="◊(dotdot "maps.html")">maps</a></li>
+   <li><a href="◊(dotdot "about.html")">about</a></li>
   </ul>
  </nav>
  ◊(slurp (str (:path params) "/" (:file params)))

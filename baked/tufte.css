@@ -31,6 +31,8 @@ matlab::before {
 
 nav li { display: inline; }
 nav ul { -webkit-padding-start: 0; }
+ol.georgian { list-style-type: georgian; }
+ol.iroha { list-style-type: hiragana-iroha; }
 
 /* Tufte CSS styles */
 html { font-size: 15px; }
