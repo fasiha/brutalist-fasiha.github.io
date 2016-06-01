@@ -9,6 +9,8 @@
             [cljs.tools.reader.reader-types :as rt]))
 
 (def template-file "src/template.html")
+(def input-directory "src")
+(def output-directory "../master")
 
 (defn my-eval [s params]
   (let [pbr (rt/string-push-back-reader s)
@@ -25,23 +27,23 @@
     (recur (evaluate-lozenges s re params) re params)
     s))
 
-(defn proc [params template-file output-path]
+(defn proc [params template-file output-directory]
   (let [baked (-> template-file
                       slurp
                       (evaluate-lozenges-recursive #"◊"
                                                    params))]
-    (spit (str output-path (:file params))
+    (spit (str output-directory "/" (:file params))
           baked)))
 
 (println "Juicing…")
-(doseq [params [{:path "src" :title "top *** aldebrn.me" :file "index.html"}
-                {:path "src" :title "about *** aldebrn.me" :file "about.html"}
-                {:path "src" :title "code *** aldebrn.me" :file "code.html"}
-                {:path "src" :title "maps *** aldebrn.me" :file "maps.html"}
-                {:path "src" :title "code *** aldebrn.me" :file "code/mat-expando.html"}
-                {:path "src" :title "Texture-shaded terrain *** aldebrn.me" :file "maps/texshade/index.html"}
+(doseq [params [{:path input-directory :title "top *** aldebrn.me" :file "index.html"}
+                {:path input-directory :title "about *** aldebrn.me" :file "about.html"}
+                {:path input-directory :title "code *** aldebrn.me" :file "code.html"}
+                {:path input-directory :title "maps *** aldebrn.me" :file "maps.html"}
+                {:path input-directory :title "code *** aldebrn.me" :file "code/mat-expando.html"}
+                {:path input-directory :title "Texture-shaded terrain *** aldebrn.me" :file "maps/texshade/index.html"}
                 ]]
-  (proc params template-file "../newsletter-baked/"))
+  (proc params template-file output-directory))
 
 ; (let [bindings '[x 1]] (eval `(let ~bindings ~(reader/read-string "(+ 1 x)"))))
 ; (eval `(let ~'[x 1] ~(reader/read-string "(+ 1 x)")))
