@@ -42,6 +42,7 @@
                 {:path input-directory :title "maps *** aldebrn.me" :file "maps.html"}
                 {:path input-directory :title "code *** aldebrn.me" :file "code/mat-expando.html"}
                 {:path input-directory :title "Texture-shaded terrain *** aldebrn.me" :file "maps/texshade/index.html"}
+                {:path input-directory :title "" :file "texshade/tutorial.html"}
                 ]]
   (proc params template-file output-directory))
 
