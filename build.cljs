@@ -41,7 +41,7 @@
                 {:path "src" :title "code *** aldebrn.me" :file "code/mat-expando.html"}
                 {:path "src" :title "Texture-shaded terrain *** aldebrn.me" :file "maps/texshade/index.html"}
                 ]]
-  (proc params template-file "baked/"))
+  (proc params template-file "../newsletter-baked/"))
 
 ; (let [bindings '[x 1]] (eval `(let ~bindings ~(reader/read-string "(+ 1 x)"))))
 ; (eval `(let ~'[x 1] ~(reader/read-string "(+ 1 x)")))
