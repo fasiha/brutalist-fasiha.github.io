@@ -30,7 +30,9 @@ matlab::before {
 }
 
 nav li { display: inline; }
-nav ul { -webkit-padding-start: 0; }
+nav ul { -webkit-padding-start: 0; 
+         -moz-padding-start: 0; 
+         padding-left: 0; }
 ol.georgian { list-style-type: georgian; }
 ol.iroha { list-style-type: hiragana-iroha; }
 

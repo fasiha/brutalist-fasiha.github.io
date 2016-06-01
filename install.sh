@@ -4,4 +4,5 @@ git checkout -b master
 git mv baked/* .
 git commit -am "Baked"
 git push -u origin master -f
+git checkout dev
 
