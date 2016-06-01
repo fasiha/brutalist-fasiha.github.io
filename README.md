@@ -18,7 +18,7 @@ To re-build the website (in `website/master`), make sure you're in `dev` directo
 ```
 $ planck build.cljs
 ```
-This will rebuild all sources and put it in `../master`. Commit both directories, `git push`, and your changes will go live in a few seconds!
+This will rebuild all sources and put it in `../master`. Commit both directories/branches, `git push --all` in either of the directories, and your changes will go live in a few seconds!
 
 ### Watch files and rebuild
 Again in `dev/` directory, invoke the following: whenever any HTML file changes, the build script is rerun. (Inefficient, I know…)
