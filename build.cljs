@@ -1,5 +1,5 @@
 #!/usr/bin/env planck
-; fswatch -0 src/*.html | xargs -0 -n 1 -I {} planck build.cljs
+; fswatch -0 -r src | xargs -0 -n 1 -I {} planck build.cljs
 
 (ns build.core
   (:require [planck.core :refer [slurp spit]]

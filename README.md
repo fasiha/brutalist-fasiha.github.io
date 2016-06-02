@@ -23,6 +23,7 @@ This will rebuild all sources and put it in `../master`. Commit both directories
 ### Watch files and rebuild
 Again in `dev/` directory, invoke the following: whenever any HTML file changes, the build script is rerun. (Inefficient, I know…)
 ```
-$ fswatch -0 src/*.html | xargs -0 -n 1 -I {} planck build.cljs
+$ brew install fswatch
+$ fswatch -0 -r src | xargs -0 -n 1 -I {} planck build.cljs
 ```
 
