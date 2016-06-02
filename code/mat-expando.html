@@ -16,12 +16,12 @@
  <header>
   <h1>Insight !== Numbers</h1>
   <p class="subtitle">
-  <matlab></matlab>~~~replicate columns of a matrix unequal numbers of times. 2016 May 30.
+  <span class="small-caps">Matlab</span>~~~replicate columns of a matrix unequal numbers of times. 2016 May 30.
   </p>
  </header>
 
  <section>
-  <p>We’ve got a matrix <code>P</code>. In <matlab></matlab>, this means a 2D array of numbers. It has  <code>widthP</code> columns and the number of rows doesn’t matter. We need a second matrix <code>M</code> that contains each column of the first matrix, <code>P</code>, repeated an arbitrary number of times. A vector <code>reps</code>, containing <code>widthP</code> entries, tells you how many times any given column of <code>P</code> is replicated.</p>
+  <p>We’ve got a matrix <code>P</code>. In <span class="small-caps">Matlab</span>, this means a 2D array of numbers. It has  <code>widthP</code> columns and the number of rows doesn’t matter. We need a second matrix <code>M</code> that contains each column of the first matrix, <code>P</code>, repeated an arbitrary number of times. A vector <code>reps</code>, containing <code>widthP</code> entries, tells you how many times any given column of <code>P</code> is replicated.</p>
 
   <p>E.g. If <code>P = [42 -1 101]</code> and <code>reps = [4 2 3]</code>, we want <code>M = [42 42 42 42 -1 -1 101 101 101]</code>, assuming I typed that correctly.</p>
 
@@ -38,16 +38,16 @@ for colIdx = 1 : length(reps)
   M = [M repmat(P(:, colIdx), 1, reps(colIdx))];
 end</pre>
 
-  <p>N.B. As (unwilling) professional Matlab writers, we wouldn’t have written this to start out with since, (i) <code>for</code> loops are still best avoided in <matlab></matlab> (“Instead of writing loop-based code, consider using MATLAB matrix and vector operations” <a href="http://www.mathworks.com/help/matlab/matlab_prog/techniques-for-improving-performance.html">[Mathworks]</a>), and (ii) re-allocating storage every iteration will be slow in any system.</p>
+  <p>N.B. As (unwilling) professional <span class="small-caps">Matlab</span> writers, we wouldn’t have written this to start out with since, (i) <code>for</code> loops are still best avoided in <span class="small-caps">Matlab</span> (“Instead of writing loop-based code, consider using MATLAB matrix and vector operations” <a href="http://www.mathworks.com/help/matlab/matlab_prog/techniques-for-improving-performance.html">[Mathworks]</a>), and (ii) re-allocating storage every iteration will be slow in any system.</p>
 
   <p>§2~&gt;find ways to do the same thing faster. Here’s the approach we actually started out with:</p>
   <pre class="code">c = arrayfun(@(n, i) i*ones(n,1), reps, 1:widthP, 'un', 0);
 i = cell2mat(c(:));
 M2 = P(:, i);
 assert(all(M2(:) == M(:)))</pre>
-  <p><code>arrayfun</code> <a href="http://www.mathworks.com/help/matlab/ref/arrayfun.html">[Mathworks]</a> is a lame <code>map</code>: taking a function handle (viz., <code>@(n, i) i*ones(n,1)</code>) and any number of arrays, and returning a cell array~~~which are <matlab></matlab>’s arbitrary-type arrays.</p>
+  <p><code>arrayfun</code> <a href="http://www.mathworks.com/help/matlab/ref/arrayfun.html">[Mathworks]</a> is a lame <code>map</code>: taking a function handle (viz., <code>@(n, i) i*ones(n,1)</code>) and any number of arrays, and returning a cell array~~~which are <span class="small-caps">Matlab</span>’s arbitrary-type arrays.</p>
 
-  <p>What we’re doing here is building a vector <code>i</code>, with repeated values, which we’ll use to index into our original array <code>P</code>. This does what we need because in <matlab></matlab>, indexing an array with a vector containing repeats produces a result array containing repeats. Same story in Python/Numpy:</p>
+  <p>What we’re doing here is building a vector <code>i</code>, with repeated values, which we’ll use to index into our original array <code>P</code>. This does what we need because in <span class="small-caps">Matlab</span>, indexing an array with a vector containing repeats produces a result array containing repeats. Same story in Python/Numpy:</p>
   <pre class="code">import numpy as np
 np.array([10, 20, 30])[[0,1,2,1,0,1,2]]
 #=> array([10, 20, 30, 20, 10, 20, 30])</pre>
@@ -81,7 +81,7 @@ np.array([10, 20, 30])[[0,1,2,1,0,1,2]]
   where <code>cumsum</code> is the cumulative sum (a.k.a. prefix sum, scan, …). Staring at the vector being cumulatively summed (the second vector to the right), it dawned on me that it was non-zero only where a new group of indexes begins, i.e., at the boundary between 1 and 2, and between 2 and 3. If I could generate this boolean vector of zeros-and-ones efficiently~~~and betting that <code>cumsum</code> is fast~~~I could have an efficient way to generate the index vector <code>i</code>. I called the boolean vector <code>z</code> (“zeros, mostly” as the mnemonic).
   </p>
 
-  <p>This next part is a little ugly. I could have logically and formally reasoned out how to calculate which indexes of a vector-of-zeros to flip on to obtain <code>z</code>. I couldn’t be bothered with all that, so I did something I often do~~~just came up with code that worked for this exact numerical example: the rule seemed to involve <code>reps</code>, another <code>cumsum</code>, hrm the dimensions won’t line up just ignore the last element… It turned out that the rule discovered in this way does work for the general case.</p>
+  <p>This next part is a little ugly. I could have logically and formally reasoned out how to calculate which indexes of a vector-of-zeros to flip on to obtain <code>z</code>. I couldn’t be bothered with all that, so I did something I often do~~~just came up with code that worked for this exact numerical example: “the rule must involve <code>reps</code>, another <code>cumsum</code>, hrm the dimensions won’t line up, just ignore the last element…” It turned out that the rule discovered in this way does work for the general case.</p>
 
   <pre class="code">widthM = sum(reps);
 % vector to be cumsummed
@@ -96,7 +96,7 @@ M3 = P(:, i);
 % Works right?
 assert(all(M3(:) == M(:)))</pre>
 
-  <p>The code (minus the comments) follows the stream-of-consciousness narrative above because it was written during it. The pixie dust in finding the indexes of non-zero <code>z</code> (<code>j</code> above, because it’s an index like <code>i</code>)~~~it works, but it’s not easy to see or to explain. This isn’t academia so I can tell you~~~I got lucky. In this case, the stupid shot in the dark worked. Even better, I don’t have to impress you with a mountain of mathematical exposition “showing” you how or why this works~~~truth is, I don’t know (I mean, I can squint at it and see that it works, but that’s not “knowing”). Had this <em>not</em> worked, I’d have looked at how it fails, and patched up the implementation to avoid that failure mode, and try again. I think this is how I usually code when someone hasn’t given me a formal algorithm to implement.</p>
+  <p>The code (minus the comments) follows the stream-of-consciousness narrative above because it was written during it. The pixie dust in finding the indexes of non-zero <code>z</code> (<code>j</code> above, because it’s an index like <code>i</code>)~~~it works, but it’s not easy to see or to explain. This isn’t academia so I can tell you~~~I got lucky. In this case, the stupid shot in the dark worked. Furthermore, I don’t have to impress you with a mountain of mathematical exposition “showing” you how or why this works~~~truth is, I don’t know (I mean, I can squint at it and see that it works, but that’s not “knowing”). Had this code <em>not</em> worked, I’d have looked at how it fails, and patched up the implementation to avoid that failure mode, and try again. I think this is how I usually code when someone hasn’t given me a formal algorithm to implement.</p>
 
   <p>Actually, this code doesn’t work in the absolutely general case, when <code>reps</code> contains 0 (meaning, some columns of input <code>P</code> aren’t in output <code>M</code>). The code fails in an interesting way, but the fix isn’t that interesting: filter <code>reps</code> to be non-zero, run the above algorithm to generate <code>i</code> and shift it around to account for those 0-repeated indexes to get a corrected index vector <code>i2</code>. Here’s that full code:</p>
 
@@ -120,9 +120,9 @@ assert(all(M3(:) == M(:)))</pre>
 
   <p>3~&gt;now that we had a couple of alternative implementations that we hope are fast, it’s time to benchmark speed and test generality.</p>
 
-  <p><matlab></matlab> is an exceedingly clumsy language: anonymous functions are single expressions, and so cannot contain <code>if</code>, <code>for</code>, multiple statements of any kind (same story in Python, but that has other features that lessen the pain, without eliminating it). Matlab assignment and indexing have to be statements. Matlab requires (sub)functions to be defined in a function file, not a script file. (JavaScript and Clojure are far less brutalist, and brutal, languages.)</p>
+  <p><span class="small-caps">Matlab</span> is an exceedingly clumsy language: anonymous functions are single expressions, and so cannot contain <code>if</code>, <code>for</code>, multiple statements of any kind (same story in Python, but that has other features that lessen the pain, without eliminating it). Second, <span class="small-caps">Matlab</span> assignment and indexing have to be statements, so they cannot be inside anonymous functions. Finally, <span class="small-caps">Matlab</span> requires (sub)functions to be defined in a function file, not a script file. (JavaScript and Clojure are <em>far</em> less brutalist, and brutal, languages.)</p>
 
-  <p>As a result of this complex of inadequacies (to which we’ve long resigned ourselves), we had to convert our simple easy-to-understand script file to a more opaque and less flexible function file. You can read it in full at its <a href="https://gist.github.com/fasiha/b5e8b1d61886cbe2583febde6a3fb42f">[Gist]</a>. A software carpentry aspect I want to point out is timing in <matlab></matlab>: after checking that all three methods yield the correct answer for large, randomly generated inputs, we used <code>timeit</code> to run each implementation many times, and normalize the runtimes by the first implementation.</p>
+  <p>As a result of this constellation of inadequacies (to which we’ve long resigned ourselves), we had to convert our simple easy-to-understand script file to a more opaque and less flexible function file. You can read it in full at its <a href="https://gist.github.com/fasiha/b5e8b1d61886cbe2583febde6a3fb42f">[Gist]</a>. The software carpentry aspect I want to point out is timing in <span class="small-caps">Matlab</span>: after checking that all three methods yield the correct answer for large, randomly generated inputs, we used <code>timeit</code> to run each implementation many times, and normalize the runtimes by the first implementation.</p>
 
   <pre class="code">t1 = timeit(@() method1(reps, P));
 t2 = timeit(@() method2(reps, P));
@@ -139,7 +139,7 @@ relativeTimes = [t1 t2 t3] / t1</pre>
 
   <p>In summary, the three steps we followed, and that I’ve done countless times, are (nulla) profile to see what’s slow, then (i) carve out that piece into its own file, with some test data and a reference implementation. The next two steps, while presented above as serial, can (and were, partially) done in parallel: (ii) think very hard and find ways to make it go faster while remaining correct, and (iii) time the code. (ii) and (iii) can be repeated several times.</p>
 
-  <p>Postscript. The above discussion presumes that you are lucky enough to identify a juicy candidate for optimization. In <matlab></matlab>, with mostly-math code, this is often the case in my experience. In larger applications that do many things besides number-crunching, the inefficiencies may be spread throughout the codebase. A reasonable statement of the two schools of thought is via one of Karsten Schmidt’s workshop report <a href="https://medium.com/@thi.ng/workshop-report-hi-perf-clojurescript-with-webgl-asm-js-and-emscripten-a545cca083bc#.7tp0znhyn">[Medium]</a>.</p> 
+  <p>Postscript. The above discussion presumes that you are lucky enough to identify a juicy candidate for optimization. In <span class="small-caps">Matlab</span>, with mostly-math code, this is often the case in my experience. In larger applications that do many things besides number-crunching, the inefficiencies may be spread throughout the codebase. A reasonable statement of the two schools of thought is via one of Karsten Schmidt’s workshop report <a href="https://medium.com/@thi.ng/workshop-report-hi-perf-clojurescript-with-webgl-asm-js-and-emscripten-a545cca083bc#.7tp0znhyn">[Medium]</a>.</p> 
 
   <p>Post-postscript. 
   
@@ -149,8 +149,9 @@ relativeTimes = [t1 t2 t3] / t1</pre>
    </p>
    <footer>&gt;=&gt;Andrei Alexandrescu, <cite>Writing Quick Code in C++, Quickly</cite>, GoingNative 2013 <a href="https://youtu.be/ea5DiCg8HOY?t=5m32s">[YouTube]</a>.</footer>
   </blockquote>
+   <p>We experienced Dr Alexandrescu’s comments about measurements disconfirming intuition first-hand above, when method 2 (<code>arrayfun</code>, <code>cell2mat</code>), which we started out with, was <em>slower</em> than method 1 (<code>for</code> loop, with array reallocation every loop)!</p>
 
-  <p>Post-post-postscript. <code>timeit</code> was submitted to <a href="http://www.mathworks.com/matlabcentral/fileexchange/18798">[Mathworks File Exchange]</a> in 2008 and made it into <matlab></matlab> proper in 2013. Python 2.3, from 2003, had this built-in.</p>
+  <p>Post-post-postscript. <code>timeit</code> was submitted to <a href="http://www.mathworks.com/matlabcentral/fileexchange/18798">[Mathworks File Exchange]</a> in 2008 and made it into <span class="small-caps">Matlab</span> proper in 2013. Python 2.3, from 2003, had this built-in.</p>
 
  </section>
 

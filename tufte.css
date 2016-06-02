@@ -22,11 +22,8 @@
  font-style: normal;
 }
 
-matlab {
+.small-caps {
  font-variant: small-caps;
-}
-matlab::before {
- content: "Matlab";
 }
 
 nav li { display: inline; }
