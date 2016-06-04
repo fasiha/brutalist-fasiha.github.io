@@ -27,3 +27,12 @@ $ brew install fswatch
 $ fswatch -0 -r src | xargs -0 -n 1 -I {} planck build.cljs
 ```
 
+## Notes
+
+### Vim
+For HTML, I use one space per indentation and an effectively-infinite textwidth. In Vim,
+```
+:set tabstop=1
+:set shiftwidth=1
+:set tw=123123
+```
