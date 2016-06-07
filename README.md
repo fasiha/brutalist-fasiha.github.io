@@ -20,12 +20,20 @@ $ planck build.cljs
 ```
 This will rebuild all sources and put it in `../master`. Commit both directories/branches, `git push --all` in either of the directories, and your changes will go live in a few seconds!
 
-### Watch files and rebuild
+### Watch files, rebuild, and reload
 Again in `dev/` directory, invoke the following: whenever any HTML file changes, the build script is rerun. (Inefficient, I know…)
 ```
 $ brew install fswatch
 $ fswatch -0 -r src | xargs -0 -n 1 -I {} planck build.cljs
 ```
+
+This can readily be used to reload the webpage. **Instead** of the above, run the following:
+```
+$ brew install websocketd
+$ websocketd --port=8081 ./my-watch.sh
+```
+This magic trick is by way of [@bhauman and @mfikes](https://twitter.com/mfikes/status/636689169897648128), and of course [websocketd](http://websocketd.com/).
+
 
 ## Notes
 
