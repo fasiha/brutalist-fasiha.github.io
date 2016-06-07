@@ -36,11 +36,13 @@
           baked)))
 
 (println "Juicing…")
+; input directory is needed inside so template knows path
 (doseq [params [{:path input-directory :title "top *** aldebrn.me" :file "index.html"}
                 {:path input-directory :title "about *** aldebrn.me" :file "about.html"}
                 {:path input-directory :title "code *** aldebrn.me" :file "code.html"}
                 {:path input-directory :title "maps *** aldebrn.me" :file "maps.html"}
-                {:path input-directory :title "code *** aldebrn.me" :file "code/mat-expando.html"}
+                {:path input-directory :title "Matrix expansion * code *** aldebrn.me" :file "code/mat-expando.html"}
+                {:path input-directory :title "Webapps * code *** aldebrn.me" :file "code/cljs-intro.html"}
                 {:path input-directory :title "Texture-shaded terrain *** aldebrn.me" :file "maps/texshade/index.html"}
                 {:path input-directory :title "" :file "texshade/tutorial.html"}
                 ]]

@@ -17,3 +17,8 @@
  </nav>
  ◊(slurp (str (:path params) "/" (:file params)))
 </body>
+
+<script>
+var ws = new WebSocket('ws://localhost:8081/');
+ws.onmessage = function(event) { window.location.reload(true); };
+</script>
