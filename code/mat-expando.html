@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<title>code *** aldebrn.me</title>
+<title>Matrix expansion * code *** aldebrn.me</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../tufte.css"/>
 <body>
@@ -14,10 +14,14 @@
  </nav>
  <article class="content">
  <header>
-  <h1>Insight !== Numbers</h1>
+  <h1>
+   <span class="small-caps">Matlab</span>~~~replicate columns of a matrix unequal numbers of times
+  </h1>
   <p class="subtitle">
-  <span class="small-caps">Matlab</span>~~~replicate columns of a matrix unequal numbers of times. 2016 May 30.
+  Insight !== Numbers
   </p>
+  <p>2016 May 30</p>
+
  </header>
 
  <section>
@@ -160,3 +164,8 @@ relativeTimes = [t1 t2 t3] / t1</pre>
 
 
 </body>
+
+<script>
+var ws = new WebSocket('ws://localhost:8081/');
+ws.onmessage = function(event) { window.location.reload(true); };
+</script>

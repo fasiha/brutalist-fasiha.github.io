@@ -18,3 +18,8 @@ window.location.replace("../maps/texshade/")
 <p>You probably got here because someone saved a link to the texture-shade tutorial that was originally on <a href="http://maps.aldebrn.me/Apps/">the texture-shade app</a>. The tutorial has moved to: <a href="https://fasiha.github.io/maps/texshade/">[GitHub.io]</a>.</p>
 
 </body>
+
+<script>
+var ws = new WebSocket('ws://localhost:8081/');
+ws.onmessage = function(event) { window.location.reload(true); };
+</script>
