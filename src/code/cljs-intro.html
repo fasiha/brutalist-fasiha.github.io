@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="../highlight/solarized-dark.css">
+<script src="../highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 <article>
  <header>
   <h1>
@@ -22,10 +26,73 @@
   </p>
 
   <p>
-  This tutorial seeks to be an introduction to web programming for non-web programmers venturing into web apps, or web programmers venturing into Clojure and ClojureScript. HTML and CSS basics, as provided by <a href="https://www.khanacademy.org/computing/computer-programming/html-css">Khan Academy</a>’s <cite>Intro to HTML/CSS: Making webpages</cite> or <a href="https://www.codecademy.com/learn/web">Codecademy</a>’s <cite>HTML &amp; CSS</cite> courses, are pre-requisites.
+  This tutorial is aimed at those new to web programming, both in general and specifically with Clojure and ClojureScript. HTML and CSS basics, provided by &leq;2 hours with <a href="https://www.khanacademy.org/computing/computer-programming/html-css">Khan Academy</a>’s <cite>Intro to HTML/CSS: Making webpages</cite> or <a href="https://www.codecademy.com/learn/web">Codecademy</a>’s <cite>HTML &amp; CSS</cite> courses, are pre-requisites.
   </p>
 
-  <p>PUSA</p>
+  <p>
+  The end result will is a toy that shows visitors how many thumbs ups 👍 previous visitors have given Seymore, and allows them to give him another. The display updates in real-time for all current visitors.
+  </p>
+
+  <figure class="fullwidth">
+   <img src="images/Seymore.gif" />
+   <!-- 
+   $ ffmpeg -y -i Seymore.mov -vf fps=10,scale=768:-1:flags=lanczos,palettegen palette.png
+   $ ffmpeg -i Seymore.mov -i palette.png -lavfi "fps=10,scale=768:-1:flags=lanczos [x]; [x][1:v] paletteuse" -y sey.gif
+   -->
+  </figure>
+
+  <p>
+  Like many toys, this conceals some powerful tools, including React.js and WebSockets. Programming today tends to obscure the effective use of such tools, with many files containing many lines of code. I can’t think of a solution to this broader problem, but to ameliorate it, we will build every file ourselves (no app templates), try to use as few libraries as possible, and finally, we will look at, and explain the purpose of, each line of code.
+  </p>
+
+  <p>Let us begin. The source code is available on <a href="https://github.com/fasiha/fullstack-cljs-tutorial/tree/simplify-commits">GitHub</a>.</p>
+ </section>
+
+ <section>
+  <h2>Some terminology</h2>
+  <p>
+  There are many dichotomies in the world, and for webapps there exists a divide between the <em>client</em> (or front-end) and the <em>server</em> (or back-end). A client is a computer program like a web browser (Firefox, Safari, Chrome, that lot) that requests some assets, identified by URLs, from a server, which is another program running on potentially a different computer connected to the first through a network.</p>
+
+  <p>
+  On the server, a second dichotomy exists between <em>static</em> content versus <em>dynamic</em> content. If you remember copying files to GeoCities’ FTP, or to <code>~/public_html/</code> on your university shell account, those files were being served as static content. That is, a web server was converting URLs to file paths, and sending those files to visitors. Each visitor to a given URL saw the same content.
+  </p>
+
+  <p>
+  So if static web content maps web requests to files, then dynamic content involves running code to customize each response to the same URL. The server could be doing anything imaginable. Those visitor counters you used to see on people’s websites were generated dynamically: the page itself might be served statically, but it would include an image which was custom-generated for each visitor, incrementing the counter.
+  </p>
+
+  <p>
+  There’s a whole class of web functionality that requires dynamic generation on the server~~~usually anything involving coordination between visitors or persisting some data to permanent memory. However, it is also amazing how much can be done with a static website, and there are large classes of webapps that need no dynamic content.
+  </p>
+
+  <p>
+  Personally, I wrote client-side-only (entirely static) webapps for years before my desire for coordination and persistance forced me to revisit dynamic web servers. This was because, first, static websites are cheap to host (<a href="https://pages.github.com/">GitHub</a> will host it for free, up to 100 GB traffic per month), and second, they present a microscopic attack surface for malicious evildoers. This tutorial is light on the front-end side of the house: if that is your main interest, go read about re-frame <a href="https://github.com/Day8/re-frame">[GitHub]</a>: I use it for all my webapps.
+  </p>
+ </section>
+
+ <section>
+  <h2>Step 1 of 4: a ClojureScript client-side-only webapp</h2>
+
+  <p>
+  As a first step, let’s implement a client-only app to track our love for Seymore. This will introduce how to make client-side apps in ClojureScript and React.js, and closely follows Bruce Hauman’s lucid Figwheel Quick Start <a href="https://github.com/bhauman/lein-figwheel/wiki/Quick-Start">[GitHub]</a>.
+  </p>
+
+  <p>
+  The only thing I will ask you to install to use Clojure/Script is Leiningen, a build tool. Install instructions for Mac, Linux, and Win are available <a href="http://leiningen.org/#install">[Leiningen]</a>.</p>
+
+  <p>
+  Then, in a terminal, create a new directory to store your web app, and then create some files in it:
+  <pre><code>$ mkdir fullstack_cljs_tutorial
+$ cd fullstack_cljs_tutorial
+$ mkdir -p src/fullstack_cljs_tutorial
+$ mkdir -p resources/public
+$ touch project.clj 
+$ touch resources/public/index.html 
+$ touch fullstack_cljs_tutorial/core.cljs fullstack_cljs_tutorial/components.cljs</code></pre>
+  </p>
+
+  <p><code>project.clj</code> is used by lein (Leiningen) to handle our project dependencies and take care of the 
+  <pre><code class="lang-clj">◊(-> "src/code/cljs-intro/step-1/project.clj" slurp string/trim)</code></pre>
 
  </section>
 </article>

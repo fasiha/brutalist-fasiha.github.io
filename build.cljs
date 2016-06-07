@@ -35,7 +35,6 @@
     (spit (str output-directory "/" (:file params))
           baked)))
 
-(println "Juicing…")
 ; input directory is needed inside so template knows path
 (doseq [params [{:path input-directory :title "top *** aldebrn.me" :file "index.html"}
                 {:path input-directory :title "about *** aldebrn.me" :file "about.html"}
@@ -47,6 +46,7 @@
                 {:path input-directory :title "" :file "texshade/tutorial.html"}
                 ]]
   (proc params template-file output-directory))
+(println "Juicing…")
 
 ; (let [bindings '[x 1]] (eval `(let ~bindings ~(reader/read-string "(+ 1 x)"))))
 ; (eval `(let ~'[x 1] ~(reader/read-string "(+ 1 x)")))
